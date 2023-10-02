@@ -41,7 +41,34 @@ public interface StringUtils {
             );
             """;
 
-
+    String createAnswer = """
+            insert into  answer
+            (answer,is_answer,test_id)
+            values
+            (?, ?, ?);
+             """;
+    String updateAnswer = """
+            update answer
+            set
+            answer = ?,
+            is_answer = ?,
+            test_id = ?
+            where id = ?;
+            """;
+    String deleteAnswer = """
+            drop from  answer 
+            where id =?;
+                    
+            """;
+    String findByIdAnswer = """
+            select * from answer
+            where id = ?;
+            """;
+    String findAllAnswer = """
+            select * from answer;
+            
+            """;
+              
     String insertTest = """
             insert into exam_test(question, description, exam_id) values(?, ?, ?);
                         """;

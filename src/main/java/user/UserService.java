@@ -1,8 +1,10 @@
 package user;
 
+import com.google.common.hash.Hashing;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -47,4 +49,15 @@ public class UserService implements Service {
         return userService;
     }
 
+    public boolean checkByUsernameAndPassword(String username, String password) {
+        String password1 = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
+        for (User user : findAll()) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password1)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

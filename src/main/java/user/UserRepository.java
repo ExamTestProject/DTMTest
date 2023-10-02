@@ -33,8 +33,8 @@ public class UserRepository implements Repository<UUID, User> {
             String password = Hashing.sha256()
                     .hashString(user.getPassword(), StandardCharsets.UTF_8)
                     .toString();
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getFirstname());
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setString(4, password);
             preparedStatement.setObject(5, user.getCreated());
@@ -53,8 +53,8 @@ public class UserRepository implements Repository<UUID, User> {
                     .hashString(user.getPassword(), StandardCharsets.UTF_8)
                     .toString();
 
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getFirstname());
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
             preparedStatement.setString(3, user.getUsername());
             preparedStatement.setString(4, password);
             preparedStatement.setObject(5, user.getId());
@@ -84,14 +84,14 @@ public class UserRepository implements Repository<UUID, User> {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 UUID id = (UUID) resultSet.getObject("id");
-                String name = resultSet.getString("name");
                 String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String created = resultSet.getString("created");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
                 LocalDateTime localDate = LocalDateTime.parse(created, formatter);
-                return Optional.of(new User(id, name, firstname, username, password, localDate));
+                return Optional.of(new User(id, firstname, lastname, username, password, localDate));
             }
         } catch (SQLException e) {
             OurLogger.throwLog(new LogRecord(Level.SEVERE, e.getMessage()));
@@ -107,14 +107,14 @@ public class UserRepository implements Repository<UUID, User> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 UUID id = (UUID) resultSet.getObject("id");
-                String name = resultSet.getString("name");
                 String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String created = resultSet.getString("created");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
                 LocalDateTime localDate = LocalDateTime.parse(created, formatter);
-                users.add(new User(id, name, firstname, username, password, localDate));
+                users.add(new User(id, firstname, lastname, username, password, localDate));
             }
         } catch (SQLException e) {
             OurLogger.throwLog(new LogRecord(Level.SEVERE, e.getMessage()));

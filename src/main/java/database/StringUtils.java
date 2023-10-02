@@ -8,8 +8,8 @@ public interface StringUtils {
             create table if not exists "user"
             (
                 id        uuid primary key default gen_random_uuid(),
-                name      varchar        not null,
-                firstname varchar        not null,
+                firstname      varchar        not null,
+                lastname varchar        not null,
                 username  varchar unique not null,
                 password  varchar        not null,
                 created   timestamp        default now()
@@ -48,7 +48,7 @@ public interface StringUtils {
 
     String createUser = """
             insert into "user"
-            (name, firstname, username, password, created)
+            (firstname, lastname, username, password, created)
             values
             (?, ?, ?, ?, ?);
             """;
@@ -56,8 +56,8 @@ public interface StringUtils {
     String updateUser = """
             update "user"
             set
-            name = ?,
             firstname = ?,
+            lastname = ?,
             username = ?,
             password = ?
             where id = ?;

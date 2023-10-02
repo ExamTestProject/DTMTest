@@ -14,13 +14,18 @@ public interface StringUtils {
                 password  varchar        not null,
                 created   timestamp        default now()
             );
+            
             """;
     String createExamTable = """
             create table if not exists exam
             (
                 id   uuid primary key default gen_random_uuid(),
-                name varchar
+                name varchar,
+                type exam_type
             );
+            
+            create type exam_type as enum ('REGULAR','EXAM');
+           
             """;
     String createTestTable = """
             create table if not exists exam_test

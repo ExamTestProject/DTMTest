@@ -2,7 +2,6 @@ package user;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.N;
 
 import java.util.List;
 import java.util.Optional;

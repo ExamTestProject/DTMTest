@@ -29,7 +29,7 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createAnswer);
             preparedStatement.setString(1, answer.getAnswer());
-            preparedStatement.setBoolean(2, answer.isAnswer());
+            preparedStatement.setBoolean(2, answer.isCorrect());
             preparedStatement.setObject(3, answer.getTestId());
             preparedStatement.execute();
             connection.close();
@@ -45,7 +45,7 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.updateAnswer);
             preparedStatement.setString(1, answer.getAnswer());
-            preparedStatement.setBoolean(2, answer.isAnswer());
+            preparedStatement.setBoolean(2, answer.isCorrect());
             preparedStatement.setObject(3, answer.getTestId());
             preparedStatement.setObject(4, answer.getId());
             preparedStatement.executeUpdate();

@@ -41,6 +41,7 @@ public interface StringUtils {
             );
             """;
 
+
     String insertTest = """
             insert into exam_test(question, description, exam_id) values(?, ?, ?);
                         """;
@@ -59,6 +60,35 @@ public interface StringUtils {
             description = ?,
             exam_id = ?
             """;
+
+    String createExam = """
+            insert into exam (name)
+             values (?);
+            """;
+
+    String updateExam = """
+            update exam
+            set name = ?
+            where id = ?;
+            """;
+
+    String deleteExam = """
+            delete
+            from exam
+            where id = ?;
+            """;
+
+    String findByIdExam = """
+            select *
+            from exam
+            where id = ?;
+            """;
+
+    String findByAllExam = """
+            select *
+            from exam;
+            """;
+
     String propertiesPath = "src/main/resources/project.properties";
     String loggerPath = "logger.log";
     String isRunning = "Program is successful running";

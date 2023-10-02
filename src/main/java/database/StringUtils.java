@@ -11,16 +11,21 @@ public interface StringUtils {
                 name      varchar        not null,
                 firstname varchar        not null,
                 username  varchar unique not null,
-                password  varchar        not null check ( length(password) = 64 ),
+                password  varchar        not null,
                 created   timestamp        default now()
             );
+                        
             """;
     String createExamTable = """
             create table if not exists exam
             (
                 id   uuid primary key default gen_random_uuid(),
-                name varchar
+                name varchar,
+                type exam_type
             );
+                        
+            create type exam_type as enum ('REGULAR','EXAM');
+                       
             """;
     String createTestTable = """
             create table if not exists exam_test
@@ -40,6 +45,35 @@ public interface StringUtils {
                 test_id   uuid references exam_test (id) on delete cascade
             );
             """;
+
+    String createUser = """
+            insert into "user"
+            (name, firstname, username, password, created)
+            values
+            (?, ?, ?, ?, ?);
+            """;
+
+    String updateUser = """
+            update "user"
+            set
+            name = ?,
+            firstname = ?,
+            username = ?,
+            password = ?
+            where id = ?;
+            """;
+
+    String userDelete = """
+            delete from "user" where id = ?;
+            """;
+
+    String userFindById = """
+            select * from "user" where id = ?;
+            """;
+
+    String userSelectAll = """
+            select * from "user";
+             """;
 
     String createAnswer = """
             insert into  answer
@@ -66,9 +100,9 @@ public interface StringUtils {
             """;
     String findAllAnswer = """
             select * from answer;
-            
+                        
             """;
-              
+
     String insertTest = """
             insert into exam_test(question, description, exam_id) values(?, ?, ?);
                         """;

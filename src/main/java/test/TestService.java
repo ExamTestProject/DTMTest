@@ -1,11 +1,17 @@
 package test;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestService implements Service {
     private static final TestRepository testRepository = TestRepository.getInstance();
+
+    private static final TestService TEST_SERVICE = new TestService();
 
     @Override
     public void save(Test test) {
@@ -36,4 +42,9 @@ public class TestService implements Service {
     public boolean isExists(UUID id) {
         return findById(id).isPresent();
     }
+
+    public static TestService getInstance() {
+        return TEST_SERVICE;
+    }
+
 }

@@ -28,9 +28,10 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         Connection connection = DatabaseService.connection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createAnswer);
-            preparedStatement.setString(1, answer.getAnswer());
-            preparedStatement.setBoolean(2, answer.isCorrect());
-            preparedStatement.setObject(3, answer.getTestId());
+            preparedStatement.setObject(1,answer.getId());
+            preparedStatement.setString(2, answer.getAnswer());
+            preparedStatement.setBoolean(3, answer.isCorrect());
+            preparedStatement.setObject(4, answer.getTestId());
             preparedStatement.execute();
             connection.close();
         } catch (SQLException e) {

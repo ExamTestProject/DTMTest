@@ -11,7 +11,7 @@ public interface StringUtils {
                 name      varchar        not null,
                 firstname varchar        not null,
                 username  varchar unique not null,
-                password  varchar        not null check ( length(password) = 64 ),
+                password  varchar        not null,
                 created   timestamp        default now()
             );
             """;
@@ -40,6 +40,35 @@ public interface StringUtils {
                 test_id   uuid references exam_test (id) on delete cascade
             );
             """;
+
+    String createUser = """
+            insert into "user"
+            (name, firstname, username, password, created)
+            values
+            (?, ?, ?, ?, ?);
+            """;
+
+    String updateUser = """
+            update "user"
+            set
+            name = ?,
+            firstname = ?,
+            username = ?,
+            password = ?
+            where id = ?;
+            """;
+
+    String userDelete = """
+            delete from "user" where id = ?;
+            """;
+
+    String userFindById = """
+            select * from "user" where id = ?;
+            """;
+
+    String userSelectAll = """
+            select * from "user";
+             """;
     String propertiesPath = "src/main/resources/project.properties";
     String loggerPath = "logger.log";
     String isRunning = "Program is successful running";

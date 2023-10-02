@@ -1,6 +1,6 @@
 package exam;
 
-public enum ExamType {
+public enum  ExamType {
     REGULAR,
     EXAM
 }

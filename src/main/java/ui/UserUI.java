@@ -1,5 +1,6 @@
 package ui;
 
+import test.Test;
 import user.User;
 import user.UserService;
 
@@ -72,6 +73,19 @@ public class UserUI {
     }
 
     private void createExam(UUID id) {
+        System.out.println("Test yaratish ");
+
+        System.out.println("Test yaratadigan fanigizni tanlang: ");
+        System.out.println("Savolni yozing: ");
+      String createTest =  scannerStr.nextLine();
+
+        Test test = new Test();
+
+
+
+
+
+
 
     }
 

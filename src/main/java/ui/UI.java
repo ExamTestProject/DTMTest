@@ -19,7 +19,7 @@ public class UI {
                     1. Sign up
                     2. Sign in
                     0. Exit
-                    >>>  \s""");
+                    >>> \s""");
             int command = scannerInt.nextInt();
             switch (command) {
                 case 1 -> signUp();

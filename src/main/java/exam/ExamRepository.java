@@ -29,6 +29,7 @@ public class ExamRepository implements Repository<UUID, Exam> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createExam);
             preparedStatement.setString(1, exam.getName());
+            preparedStatement.setString(2, exam.getExamType().name());
             preparedStatement.execute();
             connection.close();
         } catch (SQLException e) {
@@ -42,7 +43,8 @@ public class ExamRepository implements Repository<UUID, Exam> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.updateExam);
             preparedStatement.setString(1, exam.getName());
-            preparedStatement.setObject(2, exam.getId());
+            preparedStatement.setString(2,exam.getExamType().name());
+            preparedStatement.setObject(3, exam.getId());
             preparedStatement.execute();
             connection.close();
         } catch (SQLException e) {
@@ -74,7 +76,9 @@ public class ExamRepository implements Repository<UUID, Exam> {
             if (resultSet.next()) {
                 UUID id = (UUID) resultSet.getObject("id");
                 String name = resultSet.getString("name");
-                Exam exam = new Exam(id, name);
+                String type = resultSet.getObject("type").toString();
+                ExamType examType = ExamType.valueOf(type);
+                Exam exam = new Exam(id, name, examType);
                 return Optional.of(exam);
             }
         } catch (SQLException e) {
@@ -93,7 +97,9 @@ public class ExamRepository implements Repository<UUID, Exam> {
             while (resultSet.next()) {
                 UUID id = (UUID) resultSet.getObject("id");
                 String name = resultSet.getString("name");
-                Exam exam = new Exam(id, name);
+                String type = resultSet.getObject("type").toString();
+                ExamType examType = ExamType.valueOf(type);
+                Exam exam = new Exam(id, name, examType);
                 examList.add(exam);
             }
         } catch (SQLException e) {

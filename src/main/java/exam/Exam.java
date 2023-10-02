@@ -13,4 +13,5 @@ public class Exam {
 
     private UUID id;
     private String name;
+    private ExamType examType;
 }

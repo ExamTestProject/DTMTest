@@ -53,11 +53,21 @@ public class UserService implements Service {
         String password1 = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();
+
         for (User user : findAll()) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password1)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Optional<User> findByUsername(String username) {
+        for (User user : findAll()) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -40,6 +40,25 @@ public interface StringUtils {
                 test_id   uuid references exam_test (id) on delete cascade
             );
             """;
+
+    String insertTest = """
+            insert into exam_test(question, description, exam_id) values(?, ?, ?);
+                        """;
+    String findByIdTest = """
+            select * from exam_test where id = ?;
+            """;
+    String getAllTests = """
+            select * from exam_test;
+            """;
+    String deleteTest = """
+            delete from exam_test where id = ?; 
+            """;
+    String updateTest = """
+            update exam_test set
+            question = ?,
+            description = ?,
+            exam_id = ?
+            """;
     String propertiesPath = "src/main/resources/project.properties";
     String loggerPath = "logger.log";
     String isRunning = "Program is successful running";

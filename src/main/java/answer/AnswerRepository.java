@@ -29,7 +29,7 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createAnswer);
             preparedStatement.setString(1, answer.getAnswer());
-            preparedStatement.setBoolean(2, true);
+            preparedStatement.setBoolean(2, answer.isCorrect());
             preparedStatement.setObject(3, answer.getTestId());
             preparedStatement.execute();
             connection.close();
@@ -45,7 +45,7 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.updateAnswer);
             preparedStatement.setString(1, answer.getAnswer());
-            preparedStatement.setBoolean(2, true);
+            preparedStatement.setBoolean(2, answer.isCorrect());
             preparedStatement.setObject(3, answer.getTestId());
             preparedStatement.setObject(4, answer.getId());
             preparedStatement.executeUpdate();
@@ -87,7 +87,6 @@ public class AnswerRepository implements Repository<UUID, Answer> {
                 boolean isAnswer = resultSet.getBoolean("is_answer");
                 UUID testId = (UUID) resultSet.getObject("test_id");
                 Answer answer1 = new Answer(id, answer, isAnswer, testId);
-
                 return Optional.of(answer1);
             }
         } catch (SQLException e) {

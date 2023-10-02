@@ -16,4 +16,6 @@ public interface Service {
     List<Test> findAll();
 
     boolean isExists(UUID id);
+
+    List<Test> findByExamId(UUID examId);
 }

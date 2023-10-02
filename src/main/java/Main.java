@@ -1,13 +1,13 @@
 import database.DatabaseController;
-import ui.UserUI;
+import exam.ExamRepository;
+import ui.UIController;
 
 public class Main {
 
     public static void main(String[] args) {
         DatabaseController databaseController = new DatabaseController();
+        UIController uiController = new UIController();
         databaseController.start();
-        UserUI userUI = new UserUI();
-        userUI.start();
+        uiController.start();
     }
-
 }

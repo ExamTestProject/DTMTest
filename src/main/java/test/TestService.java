@@ -43,6 +43,11 @@ public class TestService implements Service {
         return findById(id).isPresent();
     }
 
+    @Override
+    public List<Test> findByExamId(UUID examId) {
+        return findAll().stream().filter(test -> test.getExam_id().equals(examId)).toList();
+    }
+
     public static TestService getInstance() {
         return TEST_SERVICE;
     }

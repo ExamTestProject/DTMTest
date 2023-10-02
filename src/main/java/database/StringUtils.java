@@ -103,7 +103,6 @@ public interface StringUtils {
             """;
     String findAllAnswer = """
             select * from answer;
-                        
             """;
 
     String insertTest = """
@@ -152,6 +151,9 @@ public interface StringUtils {
     String findByAllExam = """
             select *
             from exam;
+            """;
+    String getExamByLimit = """
+            select * from exam offset ? limit ?;
             """;
 
     String propertiesPath = "src/main/resources/project.properties";

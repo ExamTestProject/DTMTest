@@ -14,7 +14,7 @@ public interface StringUtils {
                 password  varchar        not null,
                 created   timestamp        default now()
             );
-     
+                 
             """;
     String createExamTable = """
                         
@@ -80,9 +80,9 @@ public interface StringUtils {
 
     String createAnswer = """
             insert into  answer
-            (answer,is_answer,test_id)
+            (id, answer,is_answer,test_id)
             values
-            (?, ?, ?);
+            (?, ?, ?, ?);
              """;
     String updateAnswer = """
             update answer
@@ -107,7 +107,7 @@ public interface StringUtils {
             """;
 
     String insertTest = """
-            insert into exam_test(question, description, exam_id) values(?, ?, ?);
+            insert into exam_test(id, question, description, exam_id) values(?, ?, ?, ?);
                         """;
     String findByIdTest = """
             select * from exam_test where id = ?;
@@ -126,8 +126,8 @@ public interface StringUtils {
             """;
 
     String createExam = """
-            insert into exam (name, type)
-             values (?, cast(? as exam_type));
+            insert into exam (id, name, type)
+             values (?, ?, cast(? as exam_type));
             """;
 
     String updateExam = """

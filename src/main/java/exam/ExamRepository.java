@@ -28,8 +28,9 @@ public class ExamRepository implements Repository<UUID, Exam> {
         Connection connection = DatabaseService.connection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createExam);
-            preparedStatement.setString(1, exam.getName());
-            preparedStatement.setString(2, exam.getExamType().name());
+            preparedStatement.setObject(1, exam.getId());
+            preparedStatement.setString(2,exam.getName());
+            preparedStatement.setString(3, exam.getExamType().name());
             preparedStatement.execute();
             connection.close();
         } catch (SQLException e) {

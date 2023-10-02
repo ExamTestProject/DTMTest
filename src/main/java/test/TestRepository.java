@@ -28,9 +28,10 @@ public class TestRepository implements Repository<UUID, Test> {
     public void save(Test test) {
         try (Connection connection = DatabaseService.connection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.insertTest);
-            preparedStatement.setString(1, test.getQuestion());
-            preparedStatement.setString(2, test.getDescription());
-            preparedStatement.setObject(3, test.getExam_id());
+            preparedStatement.setObject(1,test.getId());
+            preparedStatement.setString(2, test.getQuestion());
+            preparedStatement.setString(3, test.getDescription());
+            preparedStatement.setObject(4, test.getExam_id());
             preparedStatement.execute();
         } catch (SQLException e) {
             OurLogger.throwLog(new LogRecord(Level.SEVERE, e.getMessage()));

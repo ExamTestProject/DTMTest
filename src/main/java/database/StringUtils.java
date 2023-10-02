@@ -14,7 +14,7 @@ public interface StringUtils {
                 password  varchar        not null,
                 created   timestamp        default now()
             );
-                        
+     
             """;
     String createExamTable = """
                         

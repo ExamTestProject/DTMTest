@@ -48,4 +48,12 @@ public class UserService implements Service {
         return userService;
     }
 
+    public boolean checkByUsernameAndPassword(String username, String password) {
+        for (User user : findAll()) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

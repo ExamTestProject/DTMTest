@@ -25,7 +25,7 @@ public class UI {
                 case 1 -> signUp();
                 case 2 -> signIn();
                 case 0 -> isExited = true;
-                default -> System.out.println("Wrong command !");
+                default -> System.out.println("Wrong command!");
             }
         }
     }
@@ -35,8 +35,11 @@ public class UI {
         String username = scannerStr.nextLine();
         System.out.print("Enter your password: ");
         String password = scannerStr.nextLine();
-        userService.checkByUsernameAndPassword(username, password);
-        System.out.println("You've entered successfully");
+        if(userService.checkByUsernameAndPassword(username, password)){
+            System.out.println("You've entered successfully");
+        }else{
+            System.out.println("Username or password is wrong. Try again !");
+        }
     }
 
     private static void signUp() {

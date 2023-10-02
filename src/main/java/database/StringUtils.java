@@ -14,7 +14,7 @@ public interface StringUtils {
                 password  varchar        not null,
                 created   timestamp        default now()
             );
-            
+                        
             """;
     String createExamTable = """
             create table if not exists exam
@@ -23,9 +23,9 @@ public interface StringUtils {
                 name varchar,
                 type exam_type
             );
-            
+                        
             create type exam_type as enum ('REGULAR','EXAM');
-           
+                       
             """;
     String createTestTable = """
             create table if not exists exam_test
@@ -74,7 +74,7 @@ public interface StringUtils {
     String userSelectAll = """
             select * from "user";
              """;
-               
+
     String createAnswer = """
             insert into  answer
             (answer,is_answer,test_id)
@@ -100,9 +100,9 @@ public interface StringUtils {
             """;
     String findAllAnswer = """
             select * from answer;
-            
+                        
             """;
-              
+
     String insertTest = """
             insert into exam_test(question, description, exam_id) values(?, ?, ?);
                         """;
@@ -149,7 +149,7 @@ public interface StringUtils {
             select *
             from exam;
             """;
-              
+
     String propertiesPath = "src/main/resources/project.properties";
     String loggerPath = "logger.log";
     String isRunning = "Program is successful running";

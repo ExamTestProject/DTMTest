@@ -93,6 +93,7 @@ public class TestRepository implements Repository<UUID, Test> {
                 String description = resultSet.getString("description");
                 UUID exam_id = (UUID) resultSet.getObject("exam_id");
                 Test test = new Test(id, question, description, exam_id);
+                tests.add(test);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -87,7 +87,6 @@ public class AnswerRepository implements Repository<UUID, Answer> {
                 boolean isAnswer = resultSet.getBoolean("is_answer");
                 UUID testId = (UUID) resultSet.getObject("test_id");
                 Answer answer1 = new Answer(id, answer, isAnswer, testId);
-
                 return Optional.of(answer1);
             }
         } catch (SQLException e) {

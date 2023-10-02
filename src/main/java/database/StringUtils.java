@@ -41,6 +41,26 @@ public interface StringUtils {
             );
             """;
 
+
+    String insertTest = """
+            insert into exam_test(question, description, exam_id) values(?, ?, ?);
+                        """;
+    String findByIdTest = """
+            select * from exam_test where id = ?;
+            """;
+    String getAllTests = """
+            select * from exam_test;
+            """;
+    String deleteTest = """
+            delete from exam_test where id = ?; 
+            """;
+    String updateTest = """
+            update exam_test set
+            question = ?,
+            description = ?,
+            exam_id = ?
+            """;
+
     String createExam = """
             insert into exam (name)
              values (?);

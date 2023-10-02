@@ -17,6 +17,9 @@ public interface StringUtils {
                         
             """;
     String createExamTable = """
+                        
+             create type exam_type as enum ('REGULAR','EXAM');
+             
             create table if not exists exam
             (
                 id   uuid primary key default gen_random_uuid(),
@@ -24,7 +27,7 @@ public interface StringUtils {
                 type exam_type
             );
                         
-            create type exam_type as enum ('REGULAR','EXAM');
+                       
                        
             """;
     String createTestTable = """
@@ -123,13 +126,14 @@ public interface StringUtils {
             """;
 
     String createExam = """
-            insert into exam (name)
-             values (?);
+            insert into exam (name, type)
+             values (?, cast(? as exam_type));
             """;
 
     String updateExam = """
             update exam
-            set name = ?
+            set name = ?,
+            type = cast(? as exam_type)
             where id = ?;
             """;
 

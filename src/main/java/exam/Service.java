@@ -18,5 +18,7 @@ public interface Service {
 
     List<Exam> findAll();
 
+    List<Exam> getExamByLimit(int offset, int limit);
+
 
 }

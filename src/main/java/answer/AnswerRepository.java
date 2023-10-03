@@ -111,8 +111,7 @@ public class AnswerRepository implements Repository<UUID, Answer> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.findAllAnswer);
             ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSet resultSetAnswer = preparedStatement.executeQuery();
-            while (resultSetAnswer.next()) {
+            while (resultSet.next()) {
                 UUID id = (UUID) resultSet.getObject("id");
                 String answer = resultSet.getString("answer");
                 boolean isAnswer = resultSet.getBoolean("is_answer");

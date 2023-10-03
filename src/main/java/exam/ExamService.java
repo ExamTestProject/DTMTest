@@ -46,6 +46,11 @@ public class ExamService implements Service {
         return examRepository.findAll();
     }
 
+    @Override
+    public List<Exam> getExamByLimit(int offset, int limit) {
+        return examRepository.getExamByLimit(offset, limit);
+    }
+
 
     public static ExamService getInstance() {
         return EXAM_SERVICE;

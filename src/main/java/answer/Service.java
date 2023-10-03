@@ -17,5 +17,7 @@ public interface Service {
 
     List<Answer> findAll();
 
+    List<Answer> findByTestId(UUID id);
+
 
 }

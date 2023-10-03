@@ -23,13 +23,36 @@ public class ExamRepository implements Repository<UUID, Exam> {
 
     private static final ExamRepository examRepository = new ExamRepository();
 
+    public List<Exam> getExamByLimit(int offset, int limit) {
+        List<Exam> examList = new ArrayList<>();
+
+        try (Connection connection = DatabaseService.connection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.getExamByLimit);
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UUID id = (UUID) resultSet.getObject("id");
+                String name = resultSet.getString("name");
+                String type = resultSet.getObject("type").toString();
+                ExamType examType = ExamType.valueOf(type);
+                Exam exam = new Exam(id, name, examType);
+                examList.add(exam);
+            }
+        } catch (SQLException e) {
+            OurLogger.throwLog(new LogRecord(Level.SEVERE, e.getMessage()));
+        }
+        return examList;
+    }
+
     @Override
     public void save(Exam exam) {
         Connection connection = DatabaseService.connection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.createExam);
             preparedStatement.setObject(1, exam.getId());
-            preparedStatement.setString(2,exam.getName());
+            preparedStatement.setString(2, exam.getName());
             preparedStatement.setString(3, exam.getExamType().name());
             preparedStatement.execute();
             connection.close();
@@ -44,7 +67,7 @@ public class ExamRepository implements Repository<UUID, Exam> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(StringUtils.updateExam);
             preparedStatement.setString(1, exam.getName());
-            preparedStatement.setString(2,exam.getExamType().name());
+            preparedStatement.setString(2, exam.getExamType().name());
             preparedStatement.setObject(3, exam.getId());
             preparedStatement.execute();
             connection.close();

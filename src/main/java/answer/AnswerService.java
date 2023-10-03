@@ -46,7 +46,12 @@ public class AnswerService implements Service {
         return answerRepository.findAll();
     }
 
-    public static AnswerService getInstance(){
+    @Override
+    public List<Answer> findByTestId(UUID id) {
+        return findAll().stream().filter(answer -> answer.getTestId().equals(id)).toList();
+    }
+
+    public static AnswerService getInstance() {
         return answerService;
     }
 

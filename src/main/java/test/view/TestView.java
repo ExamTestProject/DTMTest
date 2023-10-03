@@ -13,4 +13,5 @@ public class TestView {
     private UUID id;
     private boolean isDone;
     private boolean isCorrectAnswer;
+    private int chooseAnswer;
 }

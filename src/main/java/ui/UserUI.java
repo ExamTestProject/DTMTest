@@ -119,7 +119,7 @@ public class UserUI {
         List<Test> tests = testService.findByExamId(examId);
         List<TestView> testViews = tests
                 .stream()
-                .map(test -> new TestView(test.getId(), false, false))
+                .map(test -> new TestView(test.getId(), false, false, 0))
                 .toList();
 
         int testCount = tests.size();
@@ -134,10 +134,14 @@ public class UserUI {
             List<Answer> answers = answerService.findByTestId(test.getId());
             int count = 1;
             if (testView.isDone()) {
-                System.out.println("Question: " + ANSI_GREEN + test.getQuestion() + ANSI_RESET);
-                System.out.println("\nDescription: " + ANSI_GREEN + test.getDescription() + ANSI_RESET);
+                System.out.println("Question: " + test.getQuestion());
+                System.out.println("\nDescription: " + test.getDescription());
                 for (Answer answer : answers) {
-                    System.out.println(ANSI_GREEN + count + ": " + answer.getAnswer() + ANSI_RESET);
+                    if (testView.getChooseAnswer() == count) {
+                        System.out.println(ANSI_GREEN + count + ": " + answer.getAnswer() + ANSI_RESET);
+                    } else {
+                        System.out.println(count + ": " + answer.getAnswer());
+                    }
                     count++;
                 }
             } else {
@@ -167,9 +171,51 @@ public class UserUI {
                         System.out.println("Not found test!");
                     }
                 } else if (command.equalsIgnoreCase("*")) {
+                    int viewCount = 1;
+                    for (TestView view : testViews) {
+                        Test test1 = testService.findById(view.getId()).get();
+                        if (view.isDone()) {
+                            System.out.println("\u001B[34m" + viewCount + ": " + test1.getQuestion() + ANSI_RESET);
+                        } else {
+                            System.out.println("\u001B[33m" + viewCount + ": " + test1.getQuestion() + ANSI_RESET);
+                        }
+                        viewCount++;
+                    }
                     System.out.print("Are you finish test? (Y/N): ");
                     String finishCommand = scannerStr.nextLine();
                     if (finishCommand.equalsIgnoreCase("y")) {
+                        Optional<Exam> examOptional = examService.findById(examId);
+                        if (examOptional.isPresent()) {
+                            Exam exam = examOptional.get();
+                            int testCounts = 0;
+                            if (exam.getExamType() == ExamType.REGULAR) {
+                                for (Test test1 : tests) {
+                                    List<Answer> answerList = answerService.findByTestId(test1.getId());
+                                    int correctAnswerInt = 0;
+                                    for (int i = 0; i < answerList.size(); i++) {
+                                        if (answerList.get(i).isCorrect()) {
+                                            correctAnswerInt = i + 1;
+                                            break;
+                                        }
+                                    }
+                                    TestView testView1 = testViews.get(testCounts);
+
+                                    System.out.println("\n");
+                                    System.out.println("Question: " + test1.getQuestion());
+                                    System.out.println();
+                                    System.out.println("Description: " + test1.getDescription());
+                                    for (int i = 0; i < answerList.size(); i++) {
+                                        if (correctAnswerInt == (i + 1)) {
+                                            System.out.println(ANSI_GREEN + (i + 1) + ": " + test1.getQuestion() + ANSI_RESET);
+                                        } else if (testView1.getChooseAnswer() == (i + 1)) {
+                                            System.out.println(ANSI_RED + (i + 1) + ": " + test1.getQuestion() + ANSI_RESET);
+                                        } else {
+                                            System.out.println((i + 1) + ": " + test1.getQuestion());
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         break;
                     } else if (finishCommand.equalsIgnoreCase("n")) {
 
@@ -190,6 +236,7 @@ public class UserUI {
                         int commandInt = Integer.parseInt(command);
                         if (commandInt > 0 && commandInt <= count) {
                             Answer answer = answerService.findAll().get(commandInt - 1);
+                            testView.setChooseAnswer(commandInt);
                             if (answer.isCorrect()) {
                                 if (testView.isDone()) {
                                     if (!testView.isCorrectAnswer()) {
@@ -250,6 +297,7 @@ public class UserUI {
                             int commandInt = Integer.parseInt(command);
                             if (commandInt > 0 && commandInt <= count) {
                                 Answer answer = answerService.findAll().get(commandInt - 1);
+                                testView.setChooseAnswer(commandInt);
                                 if (answer.isCorrect()) {
                                     if (testView.isDone()) {
                                         if (!testView.isCorrectAnswer()) {
